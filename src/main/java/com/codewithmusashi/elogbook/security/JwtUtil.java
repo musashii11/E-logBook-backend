@@ -3,6 +3,7 @@ package com.codewithmusashi.elogbook.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -10,7 +11,8 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final String SECRET_KEY = "your-secure-secret-key"; // Replace with a secure key
+    @Value("${jwt.secret}")
+    private String SECRET_KEY;
     private final long EXPIRATION_TIME = 86400000; // 24 hours in milliseconds
 
     public String generateToken(String subject) {
