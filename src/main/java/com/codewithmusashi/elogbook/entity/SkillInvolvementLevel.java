@@ -2,6 +2,8 @@ package com.codewithmusashi.elogbook.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -21,9 +23,9 @@ public class SkillInvolvementLevel {
     @JoinColumn(name = "involvement_level_id", nullable = false)
     private InvolvementLevel involvementLevel;
 
-    @Column(nullable = false)
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column(nullable = false)
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 }

@@ -1,7 +1,12 @@
+// src/main/java/com/codewithmusashi/elogbook/entity/User.java
 package com.codewithmusashi.elogbook.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 
@@ -9,49 +14,39 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "users")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    public enum Role { HOD, TEACHER, STUDENT }
+    public enum ApprovalStatus { PENDING, APPROVED, REJECTED }
+    public enum ActiveStatus { ACTIVE, INACTIVE }
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String username;
+    @Column(unique = true, nullable = false) private String username;
+    @Column(nullable = false) private String password; // hashed
+    @Column(unique = true, nullable = false) private String email;
 
-    @Column(nullable = false)
-    private String password;
-
-    @Column(unique = true)
-    private String email;
-
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING) @Column(nullable = false)
     private Role role;
 
-    @Column(nullable = false)
-    private String fullName;
-
-    @ManyToOne
-    @JoinColumn(name = "college_id", nullable = false)
-    private College college;
+    @Column(nullable = false) private String fullName;
+    @Column(nullable = false) private String collegeName;
 
     private String rollNumber;
 
-    private String joiningLetterPath;
+    @Enumerated(EnumType.STRING) @Column(nullable = false)
+    private ApprovalStatus approvalStatus = ApprovalStatus.PENDING;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    @Enumerated(EnumType.STRING) @Column(nullable = false)
+    private ActiveStatus activeStatus = ActiveStatus.INACTIVE;
 
-    private String metadata;
+    @Column(columnDefinition = "jsonb")
+    @JdbcTypeCode(SqlTypes.JSON)
+    private java.util.Map<String, Object> metadata;   // or com.fasterxml.jackson.databind.JsonNode
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
+    @ManyToOne @JoinColumn(name = "department_id")
+    private Department department;
 
-    @Column(nullable = false)
-    private LocalDateTime updatedAt;
-
-    public enum Role {
-        ADMIN, TEACHER, STUDENT
-    }
-
-    public enum Status {
-        PENDING, PENDING_VERIFICATION, ACTIVE, INACTIVE, REJECTED
-    }
+    @CreationTimestamp private LocalDateTime createdAt;
+    @UpdateTimestamp  private LocalDateTime updatedAt;
 }

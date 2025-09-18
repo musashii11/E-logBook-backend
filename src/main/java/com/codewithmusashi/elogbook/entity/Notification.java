@@ -1,3 +1,4 @@
+// src/main/java/com/codewithmusashi/elogbook/entity/Notification.java
 package com.codewithmusashi.elogbook.entity;
 
 import jakarta.persistence.*;
@@ -9,27 +10,20 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "notifications")
 public class Notification {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public enum Type { INFO, ACTION_REQUIRED }
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(nullable = false)
-    private String type;
+    @Enumerated(EnumType.STRING) @Column(nullable = false)
+    private Type type = Type.INFO;
 
-    @Column(columnDefinition = "TEXT")
-    private String message;
+    @Column(nullable = false) private String title;
+    @Column(columnDefinition = "TEXT") private String message;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
-
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-
-    public enum Status {
-        SENT, PENDING, FAILED
-    }
+    private LocalDateTime readAt;
+    @Column(nullable = false) private LocalDateTime createdAt = LocalDateTime.now();
 }

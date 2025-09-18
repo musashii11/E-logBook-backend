@@ -30,10 +30,6 @@ public class Verification {
     @Column(columnDefinition = "TEXT")
     private String remarks;
 
-    @Column(columnDefinition = "TEXT")
-    private String mentorNotes;
-
-    @Column
     private LocalDateTime verifiedAt;
 
     public enum Classification {
@@ -41,6 +37,6 @@ public class Verification {
     }
 
     public enum Rating {
-        BELOW_EXPECTATION, MEETS_EXPECTATION, EXCEEDS_EXPECTATION, COMPLETED
+        BELOW, MEETS, EXCEEDS, COMPLETED
     }
 }

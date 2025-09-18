@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface LogEntryRepository extends JpaRepository<LogEntry, Long> {
-    List<LogEntry> findByStudentId(Long studentId);
-    List<LogEntry> findBySubjectId(Long subjectId);
+    List<LogEntry> findByStudent_Id(Long studentId);
+    List<LogEntry> findByDepartment_Id(Long departmentId);
+
 }

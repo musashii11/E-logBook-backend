@@ -2,6 +2,8 @@ package com.codewithmusashi.elogbook.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -13,15 +15,14 @@ public class InvolvementLevel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true, nullable = false)
     private String name;
 
-    @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(nullable = false)
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column(nullable = false)
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 }

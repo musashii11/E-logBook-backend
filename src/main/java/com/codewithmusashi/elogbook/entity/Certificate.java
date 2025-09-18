@@ -18,12 +18,10 @@ public class Certificate {
     private User student;
 
     @ManyToOne
-    @JoinColumn(name = "course_id", nullable = false)
-    private Course course;
+    @JoinColumn(name = "department_id", nullable = false)
+    private Department department;
 
-    @Column(nullable = false)
     private String filePath;
 
-    @Column(nullable = false)
     private LocalDateTime issuedAt;
 }

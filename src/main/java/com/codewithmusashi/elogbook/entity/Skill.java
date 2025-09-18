@@ -2,6 +2,8 @@ package com.codewithmusashi.elogbook.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -20,6 +22,9 @@ public class Skill {
     @JoinColumn(name = "competency_id", nullable = false)
     private Competency competency;
 
-    @Column(nullable = false)
+    @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }

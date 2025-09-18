@@ -2,8 +2,10 @@ package com.codewithmusashi.elogbook.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -19,55 +21,46 @@ public class LogEntry {
     private User student;
 
     @ManyToOne
-    @JoinColumn(name = "subject_id", nullable = false)
-    private Subject subject;
+    @JoinColumn(name = "department_id", nullable = false)
+    private Department department;
 
     @ManyToOne
     @JoinColumn(name = "competency_id")
-    private Competency competency;
+    private Competency competency; // Optional for daily logs
 
     @ManyToOne
     @JoinColumn(name = "skill_id")
-    private Skill skill;
+    private Skill skill; // Optional
 
     @ManyToOne
     @JoinColumn(name = "involvement_level_id", nullable = false)
     private InvolvementLevel involvementLevel;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "TEXT")
     private String activityTopic;
 
-    @Column(nullable = false)
-    private Date startDate;
+    private LocalDate startDate;
 
-    @Column(nullable = false)
-    private Date endDate;
+    private LocalDate endDate;
 
-    @Column
-    private Date dueDate;
-
-    @Column(nullable = false)
     private Integer procedureCount;
 
     @Column(columnDefinition = "TEXT")
     private String reflections;
 
-    @Column(nullable = false)
     private Boolean feedbackReceived;
 
     @Column(columnDefinition = "TEXT")
     private String learnings;
 
-    @Column
-    private String customFields;
-
     @Enumerated(EnumType.STRING)
-    private Status status;
-
     @Column(nullable = false)
+    private Status status = Status.PENDING;
+
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column(nullable = false)
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 
     public enum Status {

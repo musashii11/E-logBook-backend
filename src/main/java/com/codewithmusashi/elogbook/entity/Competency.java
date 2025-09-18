@@ -2,6 +2,8 @@ package com.codewithmusashi.elogbook.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -16,13 +18,15 @@ public class Competency {
     @Column(nullable = false)
     private String name;
 
-    @Column(columnDefinition = "TEXT")
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "subject_id", nullable = false)
-    private Subject subject;
+    @JoinColumn(name = "department_id", nullable = false)
+    private Department department;
 
-    @Column(nullable = false)
+    @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }
