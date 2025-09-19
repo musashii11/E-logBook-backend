@@ -25,7 +25,6 @@ public class DepartmentController {
         return ResponseEntity.ok(saved);
     }
 
-    // List all departments
     @GetMapping
     public ResponseEntity<List<Department>> list() {
         return ResponseEntity.ok(departmentRepository.findAll());

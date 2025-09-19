@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CompetencyRepository extends JpaRepository<Competency, Long> {
-    List<Competency> findByDepartmentId(Long departmentId);
+    List<Competency> findByDepartment_Id(Long departmentId);
 }
